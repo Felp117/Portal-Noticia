@@ -16,6 +16,7 @@ public class UsuarioService {
     }
 
     public Usuario validacao(String nome, String senha) {
+        usuarioRepository.findByLoginAndSenha(nome, senha);
         return null;
     }
 }
