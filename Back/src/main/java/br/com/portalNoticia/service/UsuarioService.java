@@ -15,8 +15,7 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    public Usuario validacao(String nome, String senha) {
-        usuarioRepository.findByLoginAndSenha(nome, senha);
-        return null;
+    public Usuario validation(String nome, String senha) {
+        return usuarioRepository.findByLoginAndSenha(nome, senha);
     }
 }

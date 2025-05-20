@@ -17,4 +17,9 @@ public class Usuario extends Pessoa{
     private Integer id;
     private String login;
     private String senha;
+
+    public Usuario(String nome, String email, String login) {
+        super(nome, email);
+        this.login = login;
+    }
 }

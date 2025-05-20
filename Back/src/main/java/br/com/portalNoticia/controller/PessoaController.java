@@ -1,6 +1,7 @@
 package br.com.portalNoticia.controller;
 
 import br.com.portalNoticia.entity.Pessoa;
+import br.com.portalNoticia.DTO.PessoaDTO;
 import br.com.portalNoticia.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,19 +29,19 @@ public class PessoaController {
     }
 
     @PostMapping(value = "/pessoa")
-    public ResponseEntity<Pessoa> save(@PathVariable(value = "id") Integer id, @RequestBody Pessoa novoItem) {
+    public ResponseEntity<Pessoa> save(@PathVariable(value = "id") Integer id, @RequestBody PessoaDTO novoItem) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
         if(pessoa.isPresent()) {
-            return new ResponseEntity<>(pessoaRepository.save(novoItem), HttpStatus.CREATED);
+            return new ResponseEntity<>(pessoaRepository.save(novoItem.converter()), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     @PutMapping(value = "/pessoa/{id}")
-    public ResponseEntity<Pessoa> Update(@PathVariable(value = "id") Integer id, @RequestBody Pessoa updateItem) {
+    public ResponseEntity<Pessoa> Update(@PathVariable(value = "id") Integer id, @RequestBody PessoaDTO updateItem) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
         if(pessoa.isPresent()) {
-            return new ResponseEntity<>(pessoaRepository.save(updateItem), HttpStatus.OK);
+            return new ResponseEntity<>(pessoaRepository.save(updateItem.converter()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

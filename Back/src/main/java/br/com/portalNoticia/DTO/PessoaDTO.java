@@ -1,23 +1,22 @@
-package br.com.portalNoticia.entity;
+package br.com.portalNoticia.DTO;
 
-import jakarta.persistence.Entity;
+import br.com.portalNoticia.entity.Pessoa;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
+@AllArgsConstructor
 @Data
-public class Pessoa {
-
+public class PessoaDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private String email;
 
-    public Pessoa(String nome, String email) {
-        this.nome = nome;
-        this.email = email;
+    public Pessoa converter() {
+        return new Pessoa(nome, email);
     }
 }
