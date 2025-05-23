@@ -19,4 +19,13 @@ public class Noticia {
     private Categoria categoria;
     @ManyToOne
     private Autor autor;
+
+    public Noticia(Integer id, String titulo, String conteudo, Timestamp dataPublicacao, Categoria categoria, Autor autor) {
+        this.id = id;
+        this.titulo = titulo;
+        this.conteudo = conteudo;
+        this.dataPublicacao = dataPublicacao;
+        this.categoria = categoria;
+        this.autor = autor;
+    }
 }

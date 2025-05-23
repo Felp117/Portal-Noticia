@@ -24,26 +24,26 @@ public class PessoaController {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<PessoaDto>> findAll() {
         List<Pessoa> pessoa = service.findAll();
         List<PessoaDto> listDto = pessoa.stream().map(PessoaDto::new).toList();
         return ResponseEntity.ok().body(listDto);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<PessoaDto> findById(@PathVariable Integer id) throws BadRequestException {
         Pessoa pessoa = service.findById(id);
         return ResponseEntity.ok().body(new PessoaDto(pessoa));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws BadRequestException {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update( @RequestBody PessoaDto dto, @PathVariable Integer id) throws BadRequestException {
         dto.setId(id);
         Pessoa pessoa = service.fromDto(dto);
@@ -51,12 +51,11 @@ public class PessoaController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<PessoaDto> insert(@RequestBody PessoaDto dto){
         Pessoa pessoa = service.fromDto(dto);
         pessoa = service.insert(pessoa);
         URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pessoa.getId()).toUri();
         return ResponseEntity.created(url).build();
     }
-
 }

@@ -1,5 +1,6 @@
 package br.com.portalNoticia.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class Categoria {
     @ManyToOne
     private Categoria categoriaPai;
     @OneToMany(mappedBy = "categoriaPai")
+    @JsonIgnoreProperties("categoriaPai")
     private List<Categoria> subcategorias;
 
 }

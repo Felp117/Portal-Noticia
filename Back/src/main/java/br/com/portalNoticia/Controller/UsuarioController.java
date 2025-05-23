@@ -25,26 +25,26 @@ public class UsuarioController {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<UsuarioDto>> findAll() {
         List<Usuario> list = service.findAll();
         List<UsuarioDto> listDto = list.stream().map(UsuarioDto::new).toList();
         return ResponseEntity.ok().body(listDto);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UsuarioDto> findById(@PathVariable Integer id) throws BadRequestException {
         Usuario usuario = service.findById(id);
         return ResponseEntity.ok().body(new UsuarioDto(usuario));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws BadRequestException {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UsuarioDto dto) {
         Usuario usuario = service.fromDto(dto);
         usuario = (Usuario) service.insert(usuario);
@@ -52,7 +52,7 @@ public class UsuarioController {
         return ResponseEntity.created(url).build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto dto, @PathVariable Integer id) throws BadRequestException {
         dto.setId(id);
         Usuario usuario = service.fromDto(dto);

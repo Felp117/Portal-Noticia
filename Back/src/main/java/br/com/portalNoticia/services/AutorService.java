@@ -1,12 +1,10 @@
 package br.com.portalNoticia.services;
 
 import br.com.portalNoticia.dto.AutorDto;
-import br.com.portalNoticia.dto.PessoaDto;
 import br.com.portalNoticia.entity.Autor;
-import br.com.portalNoticia.entity.Pessoa;
-import br.com.portalNoticia.entity.Usuario;
 import br.com.portalNoticia.repository.AutorRepository;
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.Optional;
 @Service
 public class AutorService {
 
+    @Autowired
     private AutorRepository repository;
 
     public List<Autor> findAll() {
@@ -40,19 +39,19 @@ public class AutorService {
 
     public void update(Autor obj) throws BadRequestException {
         Autor autor = findById(obj.getId());
-
+        autorUpdate(autor, obj);
+        repository.save(autor);
     }
 
-    private void autorUpdate(Autor novo, Autor antigo){
-        novo.setBiografia(antigo.getBiografia());
+    private void autorUpdate(Autor atual, Autor novo) {
+        atual.setBiografia(novo.getBiografia());
     }
-
     public Autor fromDto(AutorDto autorDto) {
         Autor autor = new Autor();
         autor.setId(autorDto.getId());
         autor.setNome(autorDto.getNome());
         autor.setEmail(autorDto.getEmail());
-        autor.setBiografia(autor.getBiografia());
+        autor.setBiografia(autorDto.getBiografia());
         return autor;
     }
 
