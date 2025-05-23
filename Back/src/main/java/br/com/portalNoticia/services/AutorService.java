@@ -5,7 +5,9 @@ import br.com.portalNoticia.entity.Autor;
 import br.com.portalNoticia.repository.AutorRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +25,7 @@ public class AutorService {
     public Autor findById(Integer id) throws BadRequestException {
         Optional<Autor> autor = repository.findById(id);
         if(autor.isEmpty()) {
-            throw new BadRequestException("Autor/biografia não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel encontrar o autor com ID: " + id);
         }
         return autor.get();
     }

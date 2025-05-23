@@ -5,7 +5,9 @@ import br.com.portalNoticia.entity.Pessoa;
 import br.com.portalNoticia.repository.PessoaRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +25,7 @@ public class PessoaService {
     public Pessoa findById(Integer id) throws BadRequestException {
         Optional<Pessoa> pessoa = repository.findById(id);
         if(pessoa.isEmpty()) {
-            throw new BadRequestException("Pessoa não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel encontrar a pessoa com ID: " + id);
         }
         return pessoa.get();
     }
