@@ -17,36 +17,36 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping(value = "/pessoa")
+    @GetMapping(value = "/usuario")
     public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok((List<Usuario>) usuarioRepository.findAll());
     }
 
-    @GetMapping(value = "/pessoa/{id}")
+    @GetMapping(value = "/usuario/{id}")
     public ResponseEntity<Usuario> findById(@PathVariable(value = "id") Integer id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping(value = "/pessoa")
-    public ResponseEntity<Usuario> save(@PathVariable(value = "id") Integer id, @RequestBody UsuarioDTO novoItem) {
+    @PostMapping(value = "/usuario")
+    public ResponseEntity<Usuario> save(@PathVariable(value = "id") Integer id, @RequestBody Usuario novoItem) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isPresent()) {
-            return new ResponseEntity<>(usuarioRepository.save(novoItem.converter()), HttpStatus.CREATED);
+            return new ResponseEntity<>(usuarioRepository.save(novoItem), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PutMapping(value = "/pessoa/{id}")
-    public ResponseEntity<Usuario> Update(@PathVariable(value = "id") Integer id, @RequestBody UsuarioDTO updateItem) {
+    @PutMapping(value = "/usuario/{id}")
+    public ResponseEntity<Usuario> Update(@PathVariable(value = "id") Integer id, @RequestBody Usuario updateItem) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isPresent()) {
-            return new ResponseEntity<>(usuarioRepository.save(updateItem.converter()), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioRepository.save(updateItem), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping(value = "/pessoa/{id}")
+    @DeleteMapping(value = "/usuario/{id}")
     public ResponseEntity<Usuario> Delete(@PathVariable(value = "id") Integer id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isPresent()) {

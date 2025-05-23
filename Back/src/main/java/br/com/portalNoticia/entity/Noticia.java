@@ -16,10 +16,7 @@ public class Noticia {
     private String conteudo;
     private Timestamp dataPublicacao;
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
-
     @ManyToOne
-    @JoinColumn(name = "autor_id")
     private Autor autor;
 }

@@ -14,7 +14,10 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
-    @OneToMany
-    @JoinColumn(name = "listaCategoria")
-    private List<Categoria> listaCategoria = new ArrayList<>();
+    @ManyToOne
+    private Categoria categoriaPai;
+    @OneToMany(mappedBy = "categoriaPai")
+    private List<Categoria> subcategorias;
+
 }
+

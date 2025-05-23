@@ -1,7 +1,9 @@
 package br.com.portalNoticia.controller;
 
 import br.com.portalNoticia.DTO.PessoaDTO;
+import br.com.portalNoticia.entity.Categoria;
 import br.com.portalNoticia.entity.Pessoa;
+import br.com.portalNoticia.repository.CategoriaRepository;
 import br.com.portalNoticia.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,42 +18,42 @@ import java.util.Optional;
 public class CategoriaController {
 
     @Autowired
-    private PessoaRepository pessoaRepository;
+    private CategoriaRepository categoriaRepository;
 
-    @GetMapping(value = "/pessoa")
-    public ResponseEntity<List<Pessoa>> findAll() {
-        return ResponseEntity.ok((List<Pessoa>) pessoaRepository.findAll());
+    @GetMapping(value = "/categoria")
+    public ResponseEntity<List<Categoria>> findAll() {
+        return ResponseEntity.ok((List<Categoria>) categoriaRepository.findAll());
     }
 
-    @GetMapping(value = "/pessoa/{id}")
-    public ResponseEntity<Pessoa> findById(@PathVariable(value = "id") Integer id) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        return pessoa.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping(value = "/categoria/{id}")
+    public ResponseEntity<Categoria> findById(@PathVariable(value = "id") Integer id) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        return categoria.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping(value = "/pessoa")
-    public ResponseEntity<Pessoa> save(@PathVariable(value = "id") Integer id, @RequestBody PessoaDTO novoItem) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if(pessoa.isPresent()) {
-            return new ResponseEntity<>(pessoaRepository.save(novoItem.converter()), HttpStatus.CREATED);
+    @PostMapping(value = "/categoria")
+    public ResponseEntity<Categoria> save(@PathVariable(value = "id") Integer id, @RequestBody Categoria novoItem) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()) {
+            return new ResponseEntity<>(categoriaRepository.save(novoItem), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PutMapping(value = "/pessoa/{id}")
-    public ResponseEntity<Pessoa> Update(@PathVariable(value = "id") Integer id, @RequestBody PessoaDTO updateItem) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if(pessoa.isPresent()) {
-            return new ResponseEntity<>(pessoaRepository.save(updateItem.converter()), HttpStatus.OK);
+    @PutMapping(value = "/categoria/{id}")
+    public ResponseEntity<Categoria> Update(@PathVariable(value = "id") Integer id, @RequestBody Categoria updateItem) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()) {
+            return new ResponseEntity<>(categoriaRepository.save(updateItem), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping(value = "/pessoa/{id}")
-    public ResponseEntity<Pessoa> Delete(@PathVariable(value = "id") Integer id) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if(pessoa.isPresent()) {
-            pessoaRepository.delete(pessoa.get());
+    @DeleteMapping(value = "/categoria/{id}")
+    public ResponseEntity<Categoria> Delete(@PathVariable(value = "id") Integer id) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()) {
+            categoriaRepository.delete(categoria.get());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

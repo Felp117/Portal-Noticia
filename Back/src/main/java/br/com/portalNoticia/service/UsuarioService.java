@@ -11,11 +11,14 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario findById(Integer id) {
-        return usuarioRepository.findById(id).orElse(null);
+    public Usuario save(Usuario usuario){
+        return this.usuarioRepository.save(usuario);
     }
+
 
     public Usuario validation(String nome, String senha) {
         return usuarioRepository.findByLoginAndSenha(nome, senha);
     }
+
+
 }
