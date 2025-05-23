@@ -5,11 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 @Entity
-@Getter
-
+@Data
 public class Pessoa {
 
     @Id
@@ -21,9 +21,9 @@ public class Pessoa {
     public Pessoa(){
 
     }
-
     @Builder
-    public Pessoa(String nome, String email) {
+    public Pessoa(Integer id,String nome, String email) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
     }
