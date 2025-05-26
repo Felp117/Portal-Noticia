@@ -3,13 +3,18 @@ package br.com.portalNoticia.dto;
 import br.com.portalNoticia.entity.Pessoa;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class PessoaDto implements Serializable {
 
     @Serial
@@ -23,5 +28,15 @@ public class PessoaDto implements Serializable {
         this.id = pessoa.getId();
         this.nome = pessoa.getNome();
         this.email = pessoa.getEmail();
+    }
+
+    public PessoaDto(PessoaDto pessoaDto) {
+    }
+
+    public static PessoaDto convert(Pessoa pessoa) {
+        return PessoaDto.builder()
+                .nome(pessoa.getNome())
+                .email(pessoa.getEmail())
+                .build();
     }
 }

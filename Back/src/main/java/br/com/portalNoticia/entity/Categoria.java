@@ -17,7 +17,7 @@ public class Categoria {
     private String descricao;
     @ManyToOne
     private Categoria categoriaPai;
-    @OneToMany(mappedBy = "categoriaPai")
+    @OneToMany(mappedBy = "categoriaPai", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("categoriaPai")
     private List<Categoria> subcategorias;
 

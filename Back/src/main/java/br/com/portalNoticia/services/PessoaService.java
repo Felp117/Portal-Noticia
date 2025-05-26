@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,34 +19,38 @@ public class PessoaService {
     @Autowired
     private PessoaRepository repository;
 
-    public List<Pessoa> findAll() {
-        return repository.findAll();
+    public List<PessoaDto> findAll() {
+        List<Pessoa> pessoa = repository.findAll();
+        return Collections.singletonList(PessoaDto.convert((Pessoa) pessoa));
     }
 
-    public Pessoa findById(Integer id) throws BadRequestException {
+    public PessoaDto findById(Integer id) throws BadRequestException {
         Optional<Pessoa> pessoa = repository.findById(id);
         if(pessoa.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel encontrar a pessoa com ID: " + id);
         }
-        return pessoa.get();
+        return PessoaDto.convert(pessoa.get());
     }
 
-    public Pessoa insert(Pessoa pessoa) {
-        return repository.save(pessoa);
+    public PessoaDto insert(PessoaDto pessoaDto) {
+        Pessoa pessoa = fromDto(pessoaDto);
+        pessoa = repository.save(pessoa);
+        return PessoaDto.convert(pessoa);
     }
 
     public void delete(Integer id) throws BadRequestException {
-        findById(id);
         repository.deleteById(id);
     }
 
-    public Pessoa update(Pessoa obj) throws BadRequestException {
-        Pessoa pessoa = findById(obj.getId());
-        updatePessoa(pessoa, obj);
-        return repository.save(pessoa);
+    public PessoaDto update(PessoaDto obj, Integer id) throws BadRequestException {
+        obj.setId(id);
+        Pessoa pessoa = fromDto(obj);
+        pessoa = repository.save(pessoa);
+        return PessoaDto.convert(pessoa);
     }
 
-    private void updatePessoa(Pessoa NovaPessoa, Pessoa pessoa) {
+    private void updatePessoa(PessoaDto NovaPessoa) {
+        PessoaDto pessoa = new PessoaDto();
         NovaPessoa.setNome(pessoa.getNome());
         NovaPessoa.setEmail(pessoa.getEmail());
     }

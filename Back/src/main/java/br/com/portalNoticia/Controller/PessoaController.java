@@ -26,15 +26,15 @@ public class PessoaController {
 
     @GetMapping
     public ResponseEntity<List<PessoaDto>> findAll() {
-        List<Pessoa> pessoa = service.findAll();
+        List<PessoaDto> pessoa = service.findAll();
         List<PessoaDto> listDto = pessoa.stream().map(PessoaDto::new).toList();
         return ResponseEntity.ok().body(listDto);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<PessoaDto> findById(@PathVariable Integer id) throws BadRequestException {
-        Pessoa pessoa = service.findById(id);
-        return ResponseEntity.ok().body(new PessoaDto(pessoa));
+        PessoaDto pessoa = service.findById(id);
+        return ResponseEntity.ok(pessoa);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -44,18 +44,15 @@ public class PessoaController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update( @RequestBody PessoaDto dto, @PathVariable Integer id) throws BadRequestException {
-        dto.setId(id);
-        Pessoa pessoa = service.fromDto(dto);
-        pessoa = service.update(pessoa);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<PessoaDto> update(@RequestBody PessoaDto dto, @PathVariable Integer id) throws BadRequestException {
+        PessoaDto pessoa = service.update(dto, id);
+        return ResponseEntity.ok(pessoa);
     }
 
     @PostMapping
     public ResponseEntity<PessoaDto> insert(@RequestBody PessoaDto dto){
-        Pessoa pessoa = service.fromDto(dto);
-        pessoa = service.insert(pessoa);
-        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pessoa.getId()).toUri();
+        dto = service.insert(dto);
+        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(url).build();
     }
 }

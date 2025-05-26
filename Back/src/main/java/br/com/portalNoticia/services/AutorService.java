@@ -41,11 +41,12 @@ public class AutorService {
 
     public void update(Autor obj) throws BadRequestException {
         Autor autor = findById(obj.getId());
-        autorUpdate(autor, obj);
+        autorUpdate(obj);
         repository.save(autor);
     }
 
-    private void autorUpdate(Autor atual, Autor novo) {
+    private void autorUpdate(Autor atual) {
+        Autor novo = new Autor();
         atual.setBiografia(novo.getBiografia());
     }
     public Autor fromDto(AutorDto autorDto) {
