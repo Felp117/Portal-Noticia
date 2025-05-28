@@ -1,16 +1,20 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  SharedResizeObserver
+} from "./chunk-ELUXLQHW.js";
+import {
   CdkScrollable,
   ViewportRuler
-} from "./chunk-UC6ZMZS6.js";
+} from "./chunk-JXYAGOF4.js";
 import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   _StructuralStylesLoader
-} from "./chunk-QWHPROMT.js";
-import "./chunk-XNLP5GK5.js";
-import "./chunk-JME5XKN5.js";
+} from "./chunk-BXBUFD6G.js";
 import "./chunk-HBC6OKUB.js";
+import "./chunk-TFX46FDI.js";
+import "./chunk-WU7V3K4Y.js";
+import "./chunk-JME5XKN5.js";
 import {
   CdkMonitorFocus,
   CdkObserveContent,
@@ -19,20 +23,22 @@ import {
   FocusMonitor,
   MatCommonModule,
   SPACE,
-  _CdkPrivateStyleLoader,
   _IdGenerator,
-  _bindEventWithOptions,
   hasModifierKey
-} from "./chunk-XPB3VQGA.js";
+} from "./chunk-Q5XMP5NV.js";
+import {
+  _CdkPrivateStyleLoader,
+  _bindEventWithOptions
+} from "./chunk-MQTTQ4L4.js";
 import {
   Platform
-} from "./chunk-EFJAXQTF.js";
+} from "./chunk-5PQESHCB.js";
 import {
   Directionality
-} from "./chunk-F35TKNK6.js";
+} from "./chunk-DLRYK7O3.js";
 import {
   DOCUMENT
-} from "./chunk-QLIWAIDC.js";
+} from "./chunk-JXIKXDTZ.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -44,7 +50,6 @@ import {
   ElementRef,
   EventEmitter,
   HostAttributeToken,
-  Injectable,
   InjectionToken,
   Injector,
   Input,
@@ -54,7 +59,6 @@ import {
   Output,
   QueryList,
   Renderer2,
-  RendererFactory2,
   TemplateRef,
   ViewChild,
   ViewChildren,
@@ -81,7 +85,6 @@ import {
   ɵɵcontentQuery,
   ɵɵdefineComponent,
   ɵɵdefineDirective,
-  ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵelement,
@@ -112,124 +115,9 @@ import {
   __toESM
 } from "./chunk-YHCV7DAQ.js";
 
-// node_modules/@angular/cdk/fesm2022/observers/private.mjs
+// node_modules/@angular/material/fesm2022/tabs.mjs
 var import_rxjs = __toESM(require_cjs(), 1);
 var import_operators = __toESM(require_operators(), 1);
-var loopLimitExceededErrorHandler = (e) => {
-  if (e instanceof ErrorEvent && e.message === "ResizeObserver loop limit exceeded") {
-    console.error(`${e.message}. This could indicate a performance issue with your app. See https://github.com/WICG/resize-observer/blob/master/explainer.md#error-handling`);
-  }
-};
-var SingleBoxSharedResizeObserver = class {
-  _box;
-  /** Stream that emits when the shared observer is destroyed. */
-  _destroyed = new import_rxjs.Subject();
-  /** Stream of all events from the ResizeObserver. */
-  _resizeSubject = new import_rxjs.Subject();
-  /** ResizeObserver used to observe element resize events. */
-  _resizeObserver;
-  /** A map of elements to streams of their resize events. */
-  _elementObservables = /* @__PURE__ */ new Map();
-  constructor(_box) {
-    this._box = _box;
-    if (typeof ResizeObserver !== "undefined") {
-      this._resizeObserver = new ResizeObserver((entries) => this._resizeSubject.next(entries));
-    }
-  }
-  /**
-   * Gets a stream of resize events for the given element.
-   * @param target The element to observe.
-   * @return The stream of resize events for the element.
-   */
-  observe(target) {
-    if (!this._elementObservables.has(target)) {
-      this._elementObservables.set(target, new import_rxjs.Observable((observer) => {
-        const subscription = this._resizeSubject.subscribe(observer);
-        this._resizeObserver?.observe(target, {
-          box: this._box
-        });
-        return () => {
-          this._resizeObserver?.unobserve(target);
-          subscription.unsubscribe();
-          this._elementObservables.delete(target);
-        };
-      }).pipe(
-        (0, import_operators.filter)((entries) => entries.some((entry) => entry.target === target)),
-        // Share a replay of the last event so that subsequent calls to observe the same element
-        // receive initial sizing info like the first one. Also enable ref counting so the
-        // element will be automatically unobserved when there are no more subscriptions.
-        (0, import_operators.shareReplay)({
-          bufferSize: 1,
-          refCount: true
-        }),
-        (0, import_operators.takeUntil)(this._destroyed)
-      ));
-    }
-    return this._elementObservables.get(target);
-  }
-  /** Destroys this instance. */
-  destroy() {
-    this._destroyed.next();
-    this._destroyed.complete();
-    this._resizeSubject.complete();
-    this._elementObservables.clear();
-  }
-};
-var SharedResizeObserver = class _SharedResizeObserver {
-  _cleanupErrorListener;
-  /** Map of box type to shared resize observer. */
-  _observers = /* @__PURE__ */ new Map();
-  /** The Angular zone. */
-  _ngZone = inject(NgZone);
-  constructor() {
-    if (typeof ResizeObserver !== "undefined" && (typeof ngDevMode === "undefined" || ngDevMode)) {
-      this._ngZone.runOutsideAngular(() => {
-        const renderer = inject(RendererFactory2).createRenderer(null, null);
-        this._cleanupErrorListener = renderer.listen("window", "error", loopLimitExceededErrorHandler);
-      });
-    }
-  }
-  ngOnDestroy() {
-    for (const [, observer] of this._observers) {
-      observer.destroy();
-    }
-    this._observers.clear();
-    this._cleanupErrorListener?.();
-  }
-  /**
-   * Gets a stream of resize events for the given target element and box type.
-   * @param target The element to observe for resizes.
-   * @param options Options to pass to the `ResizeObserver`
-   * @return The stream of resize events for the element.
-   */
-  observe(target, options) {
-    const box = options?.box || "content-box";
-    if (!this._observers.has(box)) {
-      this._observers.set(box, new SingleBoxSharedResizeObserver(box));
-    }
-    return this._observers.get(box).observe(target);
-  }
-  static ɵfac = function SharedResizeObserver_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _SharedResizeObserver)();
-  };
-  static ɵprov = ɵɵdefineInjectable({
-    token: _SharedResizeObserver,
-    factory: _SharedResizeObserver.ɵfac,
-    providedIn: "root"
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SharedResizeObserver, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
-})();
-
-// node_modules/@angular/material/fesm2022/tabs.mjs
-var import_rxjs2 = __toESM(require_cjs(), 1);
-var import_operators2 = __toESM(require_operators(), 1);
 
 // node_modules/@angular/cdk/fesm2022/portal-directives-Bw5woq8I.mjs
 function throwNullPortalError() {
@@ -891,7 +779,7 @@ var MatTab = class _MatTab {
     return this._contentPortal;
   }
   /** Emits whenever the internal state of the tab changes. */
-  _stateChanges = new import_rxjs2.Subject();
+  _stateChanges = new import_rxjs.Subject();
   /**
    * The relatively indexed position where 0 represents the center, negative is left, and positive
    * represents the right.
@@ -1273,7 +1161,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Whether the header should scroll to the selected index after the view has been checked. */
   _selectedIndexChanged = false;
   /** Emits when the component is destroyed. */
-  _destroyed = new import_rxjs2.Subject();
+  _destroyed = new import_rxjs.Subject();
   /** Whether the controls for pagination should be displayed */
   _showPaginationControls = false;
   /** Whether the tab list can be scrolled more towards the end of the tab label list. */
@@ -1292,7 +1180,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Cached text content of the header. */
   _currentTextContent;
   /** Stream that will stop the automated scrolling. */
-  _stopScrolling = new import_rxjs2.Subject();
+  _stopScrolling = new import_rxjs.Subject();
   /**
    * Whether pagination should be disabled. This can be used to avoid unnecessary
    * layout recalculations if it's known that pagination won't be required.
@@ -1324,9 +1212,9 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
     this._eventCleanups.push(_bindEventWithOptions(this._renderer, this._previousPaginator.nativeElement, "touchstart", () => this._handlePaginatorPress("before"), passiveEventListenerOptions), _bindEventWithOptions(this._renderer, this._nextPaginator.nativeElement, "touchstart", () => this._handlePaginatorPress("after"), passiveEventListenerOptions));
   }
   ngAfterContentInit() {
-    const dirChange = this._dir ? this._dir.change : (0, import_rxjs2.of)("ltr");
-    const resize = this._sharedResizeObserver.observe(this._elementRef.nativeElement).pipe((0, import_operators2.debounceTime)(32), (0, import_operators2.takeUntil)(this._destroyed));
-    const viewportResize = this._viewportRuler.change(150).pipe((0, import_operators2.takeUntil)(this._destroyed));
+    const dirChange = this._dir ? this._dir.change : (0, import_rxjs.of)("ltr");
+    const resize = this._sharedResizeObserver.observe(this._elementRef.nativeElement).pipe((0, import_operators.debounceTime)(32), (0, import_operators.takeUntil)(this._destroyed));
+    const viewportResize = this._viewportRuler.change(150).pipe((0, import_operators.takeUntil)(this._destroyed));
     const realign = () => {
       this.updatePagination();
       this._alignInkBarToSelectedTab();
@@ -1336,7 +1224,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
     afterNextRender(realign, {
       injector: this._injector
     });
-    (0, import_rxjs2.merge)(dirChange, viewportResize, resize, this._items.changes, this._itemsResized()).pipe((0, import_operators2.takeUntil)(this._destroyed)).subscribe(() => {
+    (0, import_rxjs.merge)(dirChange, viewportResize, resize, this._items.changes, this._itemsResized()).pipe((0, import_operators.takeUntil)(this._destroyed)).subscribe(() => {
       this._ngZone.run(() => {
         Promise.resolve().then(() => {
           this._scrollDistance = Math.max(0, Math.min(this._getMaxScrollDistance(), this._scrollDistance));
@@ -1353,11 +1241,11 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Sends any changes that could affect the layout of the items. */
   _itemsResized() {
     if (typeof ResizeObserver !== "function") {
-      return import_rxjs2.EMPTY;
+      return import_rxjs.EMPTY;
     }
     return this._items.changes.pipe(
-      (0, import_operators2.startWith)(this._items),
-      (0, import_operators2.switchMap)((tabItems) => new import_rxjs2.Observable((observer) => this._ngZone.runOutsideAngular(() => {
+      (0, import_operators.startWith)(this._items),
+      (0, import_operators.switchMap)((tabItems) => new import_rxjs.Observable((observer) => this._ngZone.runOutsideAngular(() => {
         const resizeObserver = new ResizeObserver((entries) => observer.next(entries));
         tabItems.forEach((item) => resizeObserver.observe(item.elementRef.nativeElement));
         return () => {
@@ -1366,10 +1254,10 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
       }))),
       // Skip the first emit since the resize observer emits when an item
       // is observed for new items when the tab is already inserted
-      (0, import_operators2.skip)(1),
+      (0, import_operators.skip)(1),
       // Skip emissions where all the elements are invisible since we don't want
       // the header to try and re-render with invalid measurements. See #25574.
-      (0, import_operators2.filter)((entries) => entries.some((e) => e.contentRect.width > 0 && e.contentRect.height > 0))
+      (0, import_operators.filter)((entries) => entries.some((e) => e.contentRect.width > 0 && e.contentRect.height > 0))
     );
   }
   ngAfterContentChecked() {
@@ -1635,7 +1523,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
       return;
     }
     this._stopInterval();
-    (0, import_rxjs2.timer)(HEADER_SCROLL_DELAY, HEADER_SCROLL_INTERVAL).pipe((0, import_operators2.takeUntil)((0, import_rxjs2.merge)(this._stopScrolling, this._destroyed))).subscribe(() => {
+    (0, import_rxjs.timer)(HEADER_SCROLL_DELAY, HEADER_SCROLL_INTERVAL).pipe((0, import_operators.takeUntil)((0, import_rxjs.merge)(this._stopScrolling, this._destroyed))).subscribe(() => {
       const {
         maxScrollDistance,
         distance
@@ -1951,16 +1839,16 @@ var MAT_TABS_CONFIG = new InjectionToken("MAT_TABS_CONFIG");
 var MatTabBodyPortal = class _MatTabBodyPortal extends CdkPortalOutlet {
   _host = inject(MatTabBody);
   /** Subscription to events for when the tab body begins centering. */
-  _centeringSub = import_rxjs2.Subscription.EMPTY;
+  _centeringSub = import_rxjs.Subscription.EMPTY;
   /** Subscription to events for when the tab body finishes leaving from center position. */
-  _leavingSub = import_rxjs2.Subscription.EMPTY;
+  _leavingSub = import_rxjs.Subscription.EMPTY;
   constructor() {
     super();
   }
   /** Set initial visibility or set up subscription for changing visibility. */
   ngOnInit() {
     super.ngOnInit();
-    this._centeringSub = this._host._beforeCentering.pipe((0, import_operators2.startWith)(this._host._isCenterPosition())).subscribe((isCentering) => {
+    this._centeringSub = this._host._beforeCentering.pipe((0, import_operators.startWith)(this._host._isCenterPosition())).subscribe((isCentering) => {
       if (this._host._content && isCentering && !this.hasAttached()) {
         this.attach(this._host._content);
       }
@@ -2011,7 +1899,7 @@ var MatTabBody = class _MatTabBody {
   /** Current position of the tab-body in the tab-group. Zero means that the tab is visible. */
   _positionIndex;
   /** Subscription to the directionality change observable. */
-  _dirChangeSubscription = import_rxjs2.Subscription.EMPTY;
+  _dirChangeSubscription = import_rxjs.Subscription.EMPTY;
   /** Current position of the body within the tab group. */
   _position;
   /** Previous position of the body. */
@@ -2260,9 +2148,9 @@ var MatTabGroup = class _MatTabGroup {
   _elementRef = inject(ElementRef);
   _changeDetectorRef = inject(ChangeDetectorRef);
   _ngZone = inject(NgZone);
-  _tabsSubscription = import_rxjs2.Subscription.EMPTY;
-  _tabLabelSubscription = import_rxjs2.Subscription.EMPTY;
-  _tabBodySubscription = import_rxjs2.Subscription.EMPTY;
+  _tabsSubscription = import_rxjs.Subscription.EMPTY;
+  _tabLabelSubscription = import_rxjs.Subscription.EMPTY;
+  _tabBodySubscription = import_rxjs.Subscription.EMPTY;
   _diAnimationsDisabled = inject(ANIMATION_MODULE_TYPE, {
     optional: true
   }) === "NoopAnimations";
@@ -2469,7 +2357,7 @@ var MatTabGroup = class _MatTabGroup {
   }
   /** Listens to changes in all of the tabs. */
   _subscribeToAllTabChanges() {
-    this._allTabs.changes.pipe((0, import_operators2.startWith)(this._allTabs)).subscribe((tabs) => {
+    this._allTabs.changes.pipe((0, import_operators.startWith)(this._allTabs)).subscribe((tabs) => {
       this._tabs.reset(tabs.filter((tab) => {
         return tab._closestTabGroup === this || !tab._closestTabGroup;
       }));
@@ -2532,7 +2420,7 @@ var MatTabGroup = class _MatTabGroup {
     if (this._tabLabelSubscription) {
       this._tabLabelSubscription.unsubscribe();
     }
-    this._tabLabelSubscription = (0, import_rxjs2.merge)(...this._tabs.map((tab) => tab._stateChanges)).subscribe(() => this._changeDetectorRef.markForCheck());
+    this._tabLabelSubscription = (0, import_rxjs.merge)(...this._tabs.map((tab) => tab._stateChanges)).subscribe(() => this._changeDetectorRef.markForCheck());
   }
   /** Clamps the given index to the bounds of 0 and the tabs length. */
   _clampTabIndex(index) {
@@ -2853,7 +2741,7 @@ var MatTabNav = class _MatTabNav extends MatPaginatedTabHeader {
     this._fitInkBarToContent.next(value);
     this._changeDetectorRef.markForCheck();
   }
-  _fitInkBarToContent = new import_rxjs2.BehaviorSubject(false);
+  _fitInkBarToContent = new import_rxjs.BehaviorSubject(false);
   /** Whether tabs should be stretched to fill the header. */
   stretchTabs = true;
   get animationDuration() {
@@ -2931,9 +2819,9 @@ var MatTabNav = class _MatTabNav extends MatPaginatedTabHeader {
   }
   ngAfterContentInit() {
     this._inkBar = new MatInkBar(this._items);
-    this._items.changes.pipe((0, import_operators2.startWith)(null), (0, import_operators2.takeUntil)(this._destroyed)).subscribe(() => this.updateActiveLink());
+    this._items.changes.pipe((0, import_operators.startWith)(null), (0, import_operators.takeUntil)(this._destroyed)).subscribe(() => this.updateActiveLink());
     super.ngAfterContentInit();
-    this._keyManager.change.pipe((0, import_operators2.startWith)(null), (0, import_operators2.takeUntil)(this._destroyed)).subscribe(() => this._focusedItem.set(this._keyManager?.activeItem || null));
+    this._keyManager.change.pipe((0, import_operators.startWith)(null), (0, import_operators.takeUntil)(this._destroyed)).subscribe(() => this._focusedItem.set(this._keyManager?.activeItem || null));
   }
   ngAfterViewInit() {
     if (!this.tabPanel && (typeof ngDevMode === "undefined" || ngDevMode)) {
@@ -3207,7 +3095,7 @@ var MatTabLink = class _MatTabLink extends InkBarItem {
   _tabNavBar = inject(MatTabNav);
   elementRef = inject(ElementRef);
   _focusMonitor = inject(FocusMonitor);
-  _destroyed = new import_rxjs2.Subject();
+  _destroyed = new import_rxjs.Subject();
   /** Whether the tab link is active or not. */
   _isActive = false;
   _tabIndex = computed(() => this._tabNavBar._focusedItem() === this ? this.tabIndex : -1);
@@ -3262,7 +3150,7 @@ var MatTabLink = class _MatTabLink extends InkBarItem {
         exitDuration: 0
       };
     }
-    this._tabNavBar._fitInkBarToContent.pipe((0, import_operators2.takeUntil)(this._destroyed)).subscribe((fitInkBarToContent) => {
+    this._tabNavBar._fitInkBarToContent.pipe((0, import_operators.takeUntil)(this._destroyed)).subscribe((fitInkBarToContent) => {
       this.fitInkBarToContent = fitInkBarToContent;
     });
   }
