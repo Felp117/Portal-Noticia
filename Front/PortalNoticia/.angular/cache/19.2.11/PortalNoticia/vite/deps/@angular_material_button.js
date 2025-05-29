@@ -1,31 +1,28 @@
 import {
   MatRippleModule
-} from "./chunk-A5PMH4NN.js";
+} from "./chunk-KCAWSF2U.js";
 import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   RippleRenderer,
   _StructuralStylesLoader,
   defaultRippleAnimationConfig
-} from "./chunk-HGOFELRQ.js";
+} from "./chunk-EUE3CCLE.js";
+import "./chunk-IMS6PHYN.js";
 import "./chunk-AGZFHLKA.js";
-import "./chunk-LGELZ7YD.js";
-import "./chunk-2O4WY5GE.js";
 import {
   FocusMonitor,
   MatCommonModule,
   _getEventTarget
-} from "./chunk-NMZE4D4T.js";
+} from "./chunk-FSBN3M2B.js";
+import "./chunk-4GFTAURP.js";
 import {
+  Platform,
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
-} from "./chunk-N2II7YTX.js";
-import {
-  Platform
-} from "./chunk-IIUZUENV.js";
-import "./chunk-3WU2FQ7B.js";
+} from "./chunk-AA22N5AJ.js";
 import {
   DOCUMENT
-} from "./chunk-JPOUYODX.js";
+} from "./chunk-M4S37MWV.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -41,8 +38,6 @@ import {
   Renderer2,
   RendererFactory2,
   ViewEncapsulation,
-  __spreadProps,
-  __spreadValues,
   booleanAttribute,
   inject,
   numberAttribute,
@@ -62,7 +57,11 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-3ZACAET7.js";
+} from "./chunk-UPXM2XNN.js";
+import {
+  __spreadProps,
+  __spreadValues
+} from "./chunk-S35MAB2V.js";
 
 // node_modules/@angular/material/fesm2022/ripple-loader-Ce3DAhPW.mjs
 var eventListenerOptions = {

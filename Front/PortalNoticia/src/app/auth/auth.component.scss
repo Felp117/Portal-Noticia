@@ -1,10 +1,32 @@
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px);
+}
 
 .example-card {
-  max-width: 700px;
+  max-width: 400px;
 }
-.login-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 64px);
+
+.example-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+  background-color: white;
+}
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
 }
