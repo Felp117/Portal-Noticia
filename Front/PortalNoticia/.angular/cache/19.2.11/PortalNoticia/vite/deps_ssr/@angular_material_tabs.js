@@ -1,23 +1,17 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  ArrayDataSource,
-  _RecycleViewRepeaterStrategy,
-  _VIEW_REPEATER_STRATEGY,
-  isDataSource
-} from "./chunk-B3W5TXW4.js";
-import {
-  SharedResizeObserver
-} from "./chunk-NVRM7SS7.js";
-import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   _StructuralStylesLoader
-} from "./chunk-3AL3PSFS.js";
+} from "./chunk-3MIADFIZ.js";
+import {
+  SharedResizeObserver
+} from "./chunk-ELUXLQHW.js";
 import {
   RtlScrollAxisType,
   getRtlScrollAxisType,
   supportsScrollBehavior
-} from "./chunk-SMLIC77W.js";
+} from "./chunk-IPFAZH7R.js";
 import "./chunk-HBC6OKUB.js";
 import {
   CdkMonitorFocus,
@@ -29,21 +23,21 @@ import {
   SPACE,
   _IdGenerator,
   hasModifierKey
-} from "./chunk-BFPGDCHN.js";
+} from "./chunk-IWV2T423.js";
 import {
   BidiModule,
   Directionality
-} from "./chunk-DGZXW45C.js";
+} from "./chunk-7ACVPLRB.js";
 import {
   Platform,
   _CdkPrivateStyleLoader,
   _bindEventWithOptions,
   coerceElement,
   coerceNumberProperty
-} from "./chunk-H7IUR2TV.js";
+} from "./chunk-YRNI6XS4.js";
 import {
   DOCUMENT
-} from "./chunk-XQ6C4O7P.js";
+} from "./chunk-7HSHXKCI.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -80,6 +74,7 @@ import {
   forwardRef,
   inject,
   numberAttribute,
+  require_cjs,
   require_operators,
   setClassMetadata,
   signal,
@@ -120,22 +115,149 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-I45G7NBM.js";
-import {
-  require_cjs
-} from "./chunk-AQYIT73X.js";
+} from "./chunk-YWNTH3TK.js";
 import {
   __toESM
 } from "./chunk-YHCV7DAQ.js";
 
 // node_modules/@angular/cdk/fesm2022/scrolling.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
+var import_rxjs3 = __toESM(require_cjs(), 1);
 var import_operators = __toESM(require_operators(), 1);
+
+// node_modules/@angular/cdk/fesm2022/recycle-view-repeater-strategy-DoWdPqVw.mjs
+var import_rxjs2 = __toESM(require_cjs(), 1);
+
+// node_modules/@angular/cdk/fesm2022/data-source-D34wiQZj.mjs
+var import_rxjs = __toESM(require_cjs(), 1);
+var DataSource = class {
+};
+function isDataSource(value) {
+  return value && typeof value.connect === "function" && !(value instanceof import_rxjs.ConnectableObservable);
+}
+
+// node_modules/@angular/cdk/fesm2022/recycle-view-repeater-strategy-DoWdPqVw.mjs
+var ArrayDataSource = class extends DataSource {
+  _data;
+  constructor(_data) {
+    super();
+    this._data = _data;
+  }
+  connect() {
+    return (0, import_rxjs2.isObservable)(this._data) ? this._data : (0, import_rxjs2.of)(this._data);
+  }
+  disconnect() {
+  }
+};
+var _ViewRepeaterOperation;
+(function(_ViewRepeaterOperation2) {
+  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REPLACED"] = 0] = "REPLACED";
+  _ViewRepeaterOperation2[_ViewRepeaterOperation2["INSERTED"] = 1] = "INSERTED";
+  _ViewRepeaterOperation2[_ViewRepeaterOperation2["MOVED"] = 2] = "MOVED";
+  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REMOVED"] = 3] = "REMOVED";
+})(_ViewRepeaterOperation || (_ViewRepeaterOperation = {}));
+var _VIEW_REPEATER_STRATEGY = new InjectionToken("_ViewRepeater");
+var _RecycleViewRepeaterStrategy = class {
+  /**
+   * The size of the cache used to store unused views.
+   * Setting the cache size to `0` will disable caching. Defaults to 20 views.
+   */
+  viewCacheSize = 20;
+  /**
+   * View cache that stores embedded view instances that have been previously stamped out,
+   * but don't are not currently rendered. The view repeater will reuse these views rather than
+   * creating brand new ones.
+   *
+   * TODO(michaeljamesparsons) Investigate whether using a linked list would improve performance.
+   */
+  _viewCache = [];
+  /** Apply changes to the DOM. */
+  applyChanges(changes, viewContainerRef, itemContextFactory, itemValueResolver, itemViewChanged) {
+    changes.forEachOperation((record, adjustedPreviousIndex, currentIndex) => {
+      let view;
+      let operation;
+      if (record.previousIndex == null) {
+        const viewArgsFactory = () => itemContextFactory(record, adjustedPreviousIndex, currentIndex);
+        view = this._insertView(viewArgsFactory, currentIndex, viewContainerRef, itemValueResolver(record));
+        operation = view ? _ViewRepeaterOperation.INSERTED : _ViewRepeaterOperation.REPLACED;
+      } else if (currentIndex == null) {
+        this._detachAndCacheView(adjustedPreviousIndex, viewContainerRef);
+        operation = _ViewRepeaterOperation.REMOVED;
+      } else {
+        view = this._moveView(adjustedPreviousIndex, currentIndex, viewContainerRef, itemValueResolver(record));
+        operation = _ViewRepeaterOperation.MOVED;
+      }
+      if (itemViewChanged) {
+        itemViewChanged({
+          context: view?.context,
+          operation,
+          record
+        });
+      }
+    });
+  }
+  detach() {
+    for (const view of this._viewCache) {
+      view.destroy();
+    }
+    this._viewCache = [];
+  }
+  /**
+   * Inserts a view for a new item, either from the cache or by creating a new
+   * one. Returns `undefined` if the item was inserted into a cached view.
+   */
+  _insertView(viewArgsFactory, currentIndex, viewContainerRef, value) {
+    const cachedView = this._insertViewFromCache(currentIndex, viewContainerRef);
+    if (cachedView) {
+      cachedView.context.$implicit = value;
+      return void 0;
+    }
+    const viewArgs = viewArgsFactory();
+    return viewContainerRef.createEmbeddedView(viewArgs.templateRef, viewArgs.context, viewArgs.index);
+  }
+  /** Detaches the view at the given index and inserts into the view cache. */
+  _detachAndCacheView(index, viewContainerRef) {
+    const detachedView = viewContainerRef.detach(index);
+    this._maybeCacheView(detachedView, viewContainerRef);
+  }
+  /** Moves view at the previous index to the current index. */
+  _moveView(adjustedPreviousIndex, currentIndex, viewContainerRef, value) {
+    const view = viewContainerRef.get(adjustedPreviousIndex);
+    viewContainerRef.move(view, currentIndex);
+    view.context.$implicit = value;
+    return view;
+  }
+  /**
+   * Cache the given detached view. If the cache is full, the view will be
+   * destroyed.
+   */
+  _maybeCacheView(view, viewContainerRef) {
+    if (this._viewCache.length < this.viewCacheSize) {
+      this._viewCache.push(view);
+    } else {
+      const index = viewContainerRef.indexOf(view);
+      if (index === -1) {
+        view.destroy();
+      } else {
+        viewContainerRef.remove(index);
+      }
+    }
+  }
+  /** Inserts a recycled view from the cache at the given index. */
+  _insertViewFromCache(index, viewContainerRef) {
+    const cachedView = this._viewCache.pop();
+    if (cachedView) {
+      viewContainerRef.insert(cachedView, index);
+    }
+    return cachedView || null;
+  }
+};
+
+// node_modules/@angular/cdk/fesm2022/scrolling.mjs
 var _c0 = ["contentWrapper"];
 var _c1 = ["*"];
 var VIRTUAL_SCROLL_STRATEGY = new InjectionToken("VIRTUAL_SCROLL_STRATEGY");
 var FixedSizeVirtualScrollStrategy = class {
-  _scrolledIndexChange = new import_rxjs.Subject();
+  _scrolledIndexChange = new import_rxjs3.Subject();
   /** @docs-private Implemented as part of VirtualScrollStrategy. */
   scrolledIndexChange = this._scrolledIndexChange.pipe((0, import_operators.distinctUntilChanged)());
   /** The attached viewport. */
@@ -350,7 +472,7 @@ var ScrollDispatcher = class _ScrollDispatcher {
   constructor() {
   }
   /** Subject for notifying that a registered scrollable reference element has been scrolled. */
-  _scrolled = new import_rxjs.Subject();
+  _scrolled = new import_rxjs3.Subject();
   /** Keeps track of the amount of subscriptions to `scrolled`. Used for cleaning up afterwards. */
   _scrolledCount = 0;
   /**
@@ -391,9 +513,9 @@ var ScrollDispatcher = class _ScrollDispatcher {
    */
   scrolled(auditTimeInMs = DEFAULT_SCROLL_TIME) {
     if (!this._platform.isBrowser) {
-      return (0, import_rxjs.of)();
+      return (0, import_rxjs3.of)();
     }
-    return new import_rxjs.Observable((observer) => {
+    return new import_rxjs3.Observable((observer) => {
       if (!this._cleanupGlobalListener) {
         this._cleanupGlobalListener = this._ngZone.runOutsideAngular(() => this._renderer.listen("document", "scroll", () => this._scrolled.next()));
       }
@@ -471,10 +593,10 @@ var CdkScrollable = class _CdkScrollable {
     optional: true
   });
   _scrollElement = this.elementRef.nativeElement;
-  _destroyed = new import_rxjs.Subject();
+  _destroyed = new import_rxjs3.Subject();
   _renderer = inject(Renderer2);
   _cleanupScroll;
-  _elementScrolled = new import_rxjs.Subject();
+  _elementScrolled = new import_rxjs3.Subject();
   constructor() {
   }
   ngOnInit() {
@@ -613,7 +735,7 @@ var ViewportRuler = class _ViewportRuler {
   /** Cached viewport dimensions. */
   _viewportSize;
   /** Stream of viewport change events. */
-  _change = new import_rxjs.Subject();
+  _change = new import_rxjs3.Subject();
   /** Used to reference correct document/window */
   _document = inject(DOCUMENT, {
     optional: true
@@ -752,7 +874,7 @@ var CdkVirtualScrollable = class _CdkVirtualScrollable extends CdkScrollable {
 function rangesEqual(r1, r2) {
   return r1.start == r2.start && r1.end == r2.end;
 }
-var SCROLL_SCHEDULER = typeof requestAnimationFrame !== "undefined" ? import_rxjs.animationFrameScheduler : import_rxjs.asapScheduler;
+var SCROLL_SCHEDULER = typeof requestAnimationFrame !== "undefined" ? import_rxjs3.animationFrameScheduler : import_rxjs3.asapScheduler;
 var CdkVirtualScrollViewport = class _CdkVirtualScrollViewport extends CdkVirtualScrollable {
   elementRef = inject(ElementRef);
   _changeDetectorRef = inject(ChangeDetectorRef);
@@ -764,9 +886,9 @@ var CdkVirtualScrollViewport = class _CdkVirtualScrollViewport extends CdkVirtua
   });
   _platform = inject(Platform);
   /** Emits when the viewport is detached from a CdkVirtualForOf. */
-  _detachedSubject = new import_rxjs.Subject();
+  _detachedSubject = new import_rxjs3.Subject();
   /** Emits when the rendered range changes. */
-  _renderedRangeSubject = new import_rxjs.Subject();
+  _renderedRangeSubject = new import_rxjs3.Subject();
   /** The direction the viewport scrolls. */
   get orientation() {
     return this._orientation;
@@ -788,7 +910,7 @@ var CdkVirtualScrollViewport = class _CdkVirtualScrollViewport extends CdkVirtua
   // depending on how the strategy calculates the scrolled index, it may come at a cost to
   // performance.
   /** Emits when the index of the first element visible in the viewport changes. */
-  scrolledIndexChange = new import_rxjs.Observable((observer) => this._scrollStrategy.scrolledIndexChange.subscribe((index) => Promise.resolve().then(() => this.ngZone.run(() => observer.next(index)))));
+  scrolledIndexChange = new import_rxjs3.Observable((observer) => this._scrollStrategy.scrolledIndexChange.subscribe((index) => Promise.resolve().then(() => this.ngZone.run(() => observer.next(index)))));
   /** The element that wraps the rendered content. */
   _contentWrapper;
   /** A stream that emits whenever the rendered range changes. */
@@ -829,7 +951,7 @@ var CdkVirtualScrollViewport = class _CdkVirtualScrollViewport extends CdkVirtua
   /** A list of functions to run after the next change detection cycle. */
   _runAfterChangeDetection = [];
   /** Subscription to changes in the viewport size. */
-  _viewportChanges = import_rxjs.Subscription.EMPTY;
+  _viewportChanges = import_rxjs3.Subscription.EMPTY;
   _injector = inject(Injector);
   _isDestroyed = false;
   constructor() {
@@ -1220,9 +1342,9 @@ var CdkVirtualForOf = class _CdkVirtualForOf {
     skipSelf: true
   });
   /** Emits when the rendered view of the data changes. */
-  viewChange = new import_rxjs.Subject();
+  viewChange = new import_rxjs3.Subject();
   /** Subject that emits when a new DataSource instance is given. */
-  _dataSourceChanges = new import_rxjs.Subject();
+  _dataSourceChanges = new import_rxjs3.Subject();
   /** The DataSource to display. */
   get cdkVirtualForOf() {
     return this._cdkVirtualForOf;
@@ -1232,7 +1354,7 @@ var CdkVirtualForOf = class _CdkVirtualForOf {
     if (isDataSource(value)) {
       this._dataSourceChanges.next(value);
     } else {
-      this._dataSourceChanges.next(new ArrayDataSource((0, import_rxjs.isObservable)(value) ? value : Array.from(value || [])));
+      this._dataSourceChanges.next(new ArrayDataSource((0, import_rxjs3.isObservable)(value) ? value : Array.from(value || [])));
     }
   }
   _cdkVirtualForOf;
@@ -1288,7 +1410,7 @@ var CdkVirtualForOf = class _CdkVirtualForOf {
   _renderedRange;
   /** Whether the rendered data should be updated during the next ngDoCheck cycle. */
   _needsUpdate = false;
-  _destroyed = new import_rxjs.Subject();
+  _destroyed = new import_rxjs3.Subject();
   constructor() {
     const ngZone = inject(NgZone);
     this.dataStream.subscribe((data) => {
@@ -1375,7 +1497,7 @@ var CdkVirtualForOf = class _CdkVirtualForOf {
       oldDs.disconnect(this);
     }
     this._needsUpdate = true;
-    return newDs ? newDs.connect(this) : (0, import_rxjs.of)();
+    return newDs ? newDs.connect(this) : (0, import_rxjs3.of)();
   }
   /** Update the `CdkVirtualForOfContext` for all views. */
   _updateContext() {
@@ -1589,7 +1711,7 @@ var ScrollingModule = class _ScrollingModule {
 })();
 
 // node_modules/@angular/material/fesm2022/tabs.mjs
-var import_rxjs2 = __toESM(require_cjs(), 1);
+var import_rxjs4 = __toESM(require_cjs(), 1);
 var import_operators2 = __toESM(require_operators(), 1);
 
 // node_modules/@angular/cdk/fesm2022/portal-directives-Bw5woq8I.mjs
@@ -2252,7 +2374,7 @@ var MatTab = class _MatTab {
     return this._contentPortal;
   }
   /** Emits whenever the internal state of the tab changes. */
-  _stateChanges = new import_rxjs2.Subject();
+  _stateChanges = new import_rxjs4.Subject();
   /**
    * The relatively indexed position where 0 represents the center, negative is left, and positive
    * represents the right.
@@ -2634,7 +2756,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Whether the header should scroll to the selected index after the view has been checked. */
   _selectedIndexChanged = false;
   /** Emits when the component is destroyed. */
-  _destroyed = new import_rxjs2.Subject();
+  _destroyed = new import_rxjs4.Subject();
   /** Whether the controls for pagination should be displayed */
   _showPaginationControls = false;
   /** Whether the tab list can be scrolled more towards the end of the tab label list. */
@@ -2653,7 +2775,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Cached text content of the header. */
   _currentTextContent;
   /** Stream that will stop the automated scrolling. */
-  _stopScrolling = new import_rxjs2.Subject();
+  _stopScrolling = new import_rxjs4.Subject();
   /**
    * Whether pagination should be disabled. This can be used to avoid unnecessary
    * layout recalculations if it's known that pagination won't be required.
@@ -2685,7 +2807,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
     this._eventCleanups.push(_bindEventWithOptions(this._renderer, this._previousPaginator.nativeElement, "touchstart", () => this._handlePaginatorPress("before"), passiveEventListenerOptions), _bindEventWithOptions(this._renderer, this._nextPaginator.nativeElement, "touchstart", () => this._handlePaginatorPress("after"), passiveEventListenerOptions));
   }
   ngAfterContentInit() {
-    const dirChange = this._dir ? this._dir.change : (0, import_rxjs2.of)("ltr");
+    const dirChange = this._dir ? this._dir.change : (0, import_rxjs4.of)("ltr");
     const resize = this._sharedResizeObserver.observe(this._elementRef.nativeElement).pipe((0, import_operators2.debounceTime)(32), (0, import_operators2.takeUntil)(this._destroyed));
     const viewportResize = this._viewportRuler.change(150).pipe((0, import_operators2.takeUntil)(this._destroyed));
     const realign = () => {
@@ -2697,7 +2819,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
     afterNextRender(realign, {
       injector: this._injector
     });
-    (0, import_rxjs2.merge)(dirChange, viewportResize, resize, this._items.changes, this._itemsResized()).pipe((0, import_operators2.takeUntil)(this._destroyed)).subscribe(() => {
+    (0, import_rxjs4.merge)(dirChange, viewportResize, resize, this._items.changes, this._itemsResized()).pipe((0, import_operators2.takeUntil)(this._destroyed)).subscribe(() => {
       this._ngZone.run(() => {
         Promise.resolve().then(() => {
           this._scrollDistance = Math.max(0, Math.min(this._getMaxScrollDistance(), this._scrollDistance));
@@ -2714,11 +2836,11 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
   /** Sends any changes that could affect the layout of the items. */
   _itemsResized() {
     if (typeof ResizeObserver !== "function") {
-      return import_rxjs2.EMPTY;
+      return import_rxjs4.EMPTY;
     }
     return this._items.changes.pipe(
       (0, import_operators2.startWith)(this._items),
-      (0, import_operators2.switchMap)((tabItems) => new import_rxjs2.Observable((observer) => this._ngZone.runOutsideAngular(() => {
+      (0, import_operators2.switchMap)((tabItems) => new import_rxjs4.Observable((observer) => this._ngZone.runOutsideAngular(() => {
         const resizeObserver = new ResizeObserver((entries) => observer.next(entries));
         tabItems.forEach((item) => resizeObserver.observe(item.elementRef.nativeElement));
         return () => {
@@ -2996,7 +3118,7 @@ var MatPaginatedTabHeader = class _MatPaginatedTabHeader {
       return;
     }
     this._stopInterval();
-    (0, import_rxjs2.timer)(HEADER_SCROLL_DELAY, HEADER_SCROLL_INTERVAL).pipe((0, import_operators2.takeUntil)((0, import_rxjs2.merge)(this._stopScrolling, this._destroyed))).subscribe(() => {
+    (0, import_rxjs4.timer)(HEADER_SCROLL_DELAY, HEADER_SCROLL_INTERVAL).pipe((0, import_operators2.takeUntil)((0, import_rxjs4.merge)(this._stopScrolling, this._destroyed))).subscribe(() => {
       const {
         maxScrollDistance,
         distance
@@ -3312,9 +3434,9 @@ var MAT_TABS_CONFIG = new InjectionToken("MAT_TABS_CONFIG");
 var MatTabBodyPortal = class _MatTabBodyPortal extends CdkPortalOutlet {
   _host = inject(MatTabBody);
   /** Subscription to events for when the tab body begins centering. */
-  _centeringSub = import_rxjs2.Subscription.EMPTY;
+  _centeringSub = import_rxjs4.Subscription.EMPTY;
   /** Subscription to events for when the tab body finishes leaving from center position. */
-  _leavingSub = import_rxjs2.Subscription.EMPTY;
+  _leavingSub = import_rxjs4.Subscription.EMPTY;
   constructor() {
     super();
   }
@@ -3372,7 +3494,7 @@ var MatTabBody = class _MatTabBody {
   /** Current position of the tab-body in the tab-group. Zero means that the tab is visible. */
   _positionIndex;
   /** Subscription to the directionality change observable. */
-  _dirChangeSubscription = import_rxjs2.Subscription.EMPTY;
+  _dirChangeSubscription = import_rxjs4.Subscription.EMPTY;
   /** Current position of the body within the tab group. */
   _position;
   /** Previous position of the body. */
@@ -3621,9 +3743,9 @@ var MatTabGroup = class _MatTabGroup {
   _elementRef = inject(ElementRef);
   _changeDetectorRef = inject(ChangeDetectorRef);
   _ngZone = inject(NgZone);
-  _tabsSubscription = import_rxjs2.Subscription.EMPTY;
-  _tabLabelSubscription = import_rxjs2.Subscription.EMPTY;
-  _tabBodySubscription = import_rxjs2.Subscription.EMPTY;
+  _tabsSubscription = import_rxjs4.Subscription.EMPTY;
+  _tabLabelSubscription = import_rxjs4.Subscription.EMPTY;
+  _tabBodySubscription = import_rxjs4.Subscription.EMPTY;
   _diAnimationsDisabled = inject(ANIMATION_MODULE_TYPE, {
     optional: true
   }) === "NoopAnimations";
@@ -3893,7 +4015,7 @@ var MatTabGroup = class _MatTabGroup {
     if (this._tabLabelSubscription) {
       this._tabLabelSubscription.unsubscribe();
     }
-    this._tabLabelSubscription = (0, import_rxjs2.merge)(...this._tabs.map((tab) => tab._stateChanges)).subscribe(() => this._changeDetectorRef.markForCheck());
+    this._tabLabelSubscription = (0, import_rxjs4.merge)(...this._tabs.map((tab) => tab._stateChanges)).subscribe(() => this._changeDetectorRef.markForCheck());
   }
   /** Clamps the given index to the bounds of 0 and the tabs length. */
   _clampTabIndex(index) {
@@ -4214,7 +4336,7 @@ var MatTabNav = class _MatTabNav extends MatPaginatedTabHeader {
     this._fitInkBarToContent.next(value);
     this._changeDetectorRef.markForCheck();
   }
-  _fitInkBarToContent = new import_rxjs2.BehaviorSubject(false);
+  _fitInkBarToContent = new import_rxjs4.BehaviorSubject(false);
   /** Whether tabs should be stretched to fill the header. */
   stretchTabs = true;
   get animationDuration() {
@@ -4568,7 +4690,7 @@ var MatTabLink = class _MatTabLink extends InkBarItem {
   _tabNavBar = inject(MatTabNav);
   elementRef = inject(ElementRef);
   _focusMonitor = inject(FocusMonitor);
-  _destroyed = new import_rxjs2.Subject();
+  _destroyed = new import_rxjs4.Subject();
   /** Whether the tab link is active or not. */
   _isActive = false;
   _tabIndex = computed(() => this._tabNavBar._focusedItem() === this ? this.tabIndex : -1);
