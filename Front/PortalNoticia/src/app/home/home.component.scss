@@ -1,4 +1,9 @@
 .container {
-   width: 100vh;
+   width: 100%;
     margin-top: 50px;
+}
+
+.mat-grid-tile ::ng-deep .mat-grid-tile-content {
+    align-items: start !important;
+    justify-content: center;
 }

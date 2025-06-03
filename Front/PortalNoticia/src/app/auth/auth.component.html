@@ -17,8 +17,9 @@
 
         </div>
         <div>
-            <button mat-button class="acessar-content">Acessar</button>
+            <a mat-button class="acessar-content" (click)="login()">Acessar</a>
         </div>
         <div><a href="#" class="senha-content">Esqueceu a senha?</a></div>
     </mat-card-content>
 </mat-card>
+<router-outlet></router-outlet>

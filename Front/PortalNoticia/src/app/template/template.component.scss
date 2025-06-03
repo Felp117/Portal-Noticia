@@ -1,4 +1,20 @@
 .mat-toolbar-row {
     text-align: center;
     justify-content: center;
+    margin: 0 15px;
+}
+
+button {
+    margin-right: 15px;
+}
+
+span {
+    margin-right: 15px;
+}
+.login-content {
+    justify-content: end !important;
+}
+
+.spacer {
+    flex: 1 1 auto;
 }
