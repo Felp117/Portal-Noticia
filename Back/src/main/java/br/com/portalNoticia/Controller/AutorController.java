@@ -26,38 +26,10 @@ public class AutorController {
         this.service = autorService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<AutorDto>> findAll() {
-       List<Autor> list = service.findAll();
-       List<AutorDto> listDto = list.stream().map(AutorDto::new).toList();
-       return ResponseEntity.ok().body(listDto);
-    }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<AutorDto> findById(@PathVariable Integer id) throws BadRequestException {
         Autor autor = service.findById(id);
         return ResponseEntity.ok(new AutorDto(autor));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws BadRequestException {
-        service.findById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping(value = "/{id}")
-    public ResponseEntity<AutorDto> insert(@RequestBody AutorDto dto) {
-        Autor autor = service.fromDto(dto);
-        autor = service.insert(autor);
-        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(autor.getBiografia()).toUri();
-        return ResponseEntity.created(url).build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@RequestBody AutorDto dto, @PathVariable Integer id) throws BadRequestException {
-        dto.setId(id);
-        Autor autor = service.fromDto(dto);
-        service.update(autor);
-        return ResponseEntity.noContent().build();
-    }
 }

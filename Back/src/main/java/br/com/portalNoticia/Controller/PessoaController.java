@@ -37,22 +37,4 @@ public class PessoaController {
         return ResponseEntity.ok(pessoa);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws BadRequestException {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<PessoaDto> update(@RequestBody PessoaDto dto, @PathVariable Integer id) throws BadRequestException {
-        PessoaDto pessoa = service.update(dto, id);
-        return ResponseEntity.ok(pessoa);
-    }
-
-    @PostMapping
-    public ResponseEntity<PessoaDto> insert(@RequestBody PessoaDto dto){
-        dto = service.insert(dto);
-        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(url).build();
-    }
 }

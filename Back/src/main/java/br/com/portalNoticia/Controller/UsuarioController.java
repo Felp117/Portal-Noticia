@@ -38,26 +38,4 @@ public class UsuarioController {
         return ResponseEntity.ok().body(new UsuarioDto(usuario));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws BadRequestException {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody UsuarioDto dto) {
-        Usuario usuario = service.fromDto(dto);
-        usuario = (Usuario) service.insert(usuario);
-        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(url).build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto dto, @PathVariable Integer id) throws BadRequestException {
-        dto.setId(id);
-        Usuario usuario = service.fromDto(dto);
-        usuario = service.update(usuario);
-        return ResponseEntity.noContent().build();
-
-    }
 }

@@ -32,31 +32,4 @@ public class PessoaService {
         return PessoaDto.convert(pessoa.get());
     }
 
-    public PessoaDto insert(PessoaDto pessoaDto) {
-        Pessoa pessoa = fromDto(pessoaDto);
-        pessoa = repository.save(pessoa);
-        return PessoaDto.convert(pessoa);
-    }
-
-    public void delete(Integer id) throws BadRequestException {
-        repository.deleteById(id);
-    }
-
-    public PessoaDto update(PessoaDto obj, Integer id) throws BadRequestException {
-        obj.setId(id);
-        Pessoa pessoa = fromDto(obj);
-        pessoa = repository.save(pessoa);
-        return PessoaDto.convert(pessoa);
-    }
-
-    private void updatePessoa(PessoaDto NovaPessoa) {
-        PessoaDto pessoa = new PessoaDto();
-        NovaPessoa.setNome(pessoa.getNome());
-        NovaPessoa.setEmail(pessoa.getEmail());
-    }
-
-    public Pessoa fromDto(PessoaDto pessoaDto) {
-        return new Pessoa(pessoaDto.getId(), pessoaDto.getNome(), pessoaDto.getEmail());
-    }
-
 }

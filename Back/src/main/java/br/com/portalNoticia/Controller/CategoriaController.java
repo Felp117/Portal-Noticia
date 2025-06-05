@@ -30,31 +30,4 @@ public class CategoriaController {
         return ResponseEntity.ok().body(listDto);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDto> findById(@PathVariable Integer id) throws BadRequestException {
-        Categoria categoria = service.findById(id);
-        return ResponseEntity.ok().body(new CategoriaDto(categoria));
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@RequestBody CategoriaDto dto, @PathVariable Integer id) throws BadRequestException {
-        dto.setId(id);
-        Categoria categoria = service.fromDto(dto);
-        categoria = service.update(categoria);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping
-    public ResponseEntity<CategoriaDto> insert(@RequestBody CategoriaDto dto) {
-        Categoria categoria = service.fromDto(dto);
-        categoria = service.insert(categoria);
-        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
-        return ResponseEntity.created(url).build();
-    }
 }

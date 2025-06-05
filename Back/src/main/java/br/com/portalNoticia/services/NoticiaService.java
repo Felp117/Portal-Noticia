@@ -6,6 +6,7 @@ import br.com.portalNoticia.entity.Categoria;
 import br.com.portalNoticia.entity.Noticia;
 import br.com.portalNoticia.repository.NoticiaRepository;
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,12 @@ import java.util.Optional;
 @Service
 public class NoticiaService {
 
-    private NoticiaRepository repository;
+    private final NoticiaRepository repository;
+
+    @Autowired
+    public NoticiaService(NoticiaRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Noticia> findAll() {
         return repository.findAll();

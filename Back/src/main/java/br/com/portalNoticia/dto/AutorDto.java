@@ -19,7 +19,6 @@ public class AutorDto extends PessoaDto{
     private List<NoticiaResumoDto> noticias;
 
     public AutorDto(Autor autor) {
-        super(autor);
         this.biografia = autor.getBiografia();
         if (autor.getNoticias() != null) {
             this.noticias = autor.getNoticias()
