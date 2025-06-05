@@ -34,7 +34,7 @@ export class Service extends SimpleService {
     // }
 
     login(data: Login): Observable<any> {
-        return this.post(data, `/login`);
+        return this.post(data, `login`);
     }
 }
 

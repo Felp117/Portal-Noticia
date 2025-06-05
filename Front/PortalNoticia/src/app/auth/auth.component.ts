@@ -6,7 +6,7 @@ import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { Service } from '../service/service';
+import { Service } from '../service/login.service';
 import { Login } from '../models/login.models';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,8 +18,8 @@ import { RouterModule } from '@angular/router'
   imports: [MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, NgIf, HttpClientModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss'] 
-  
+  styleUrls: ['./auth.component.scss']
+
 })
 export class AuthComponent {
   email = new FormControl(null, [Validators.required, Validators.email]);
@@ -41,7 +41,7 @@ export class AuthComponent {
   login() {
 
     let data: Login = {
-      email: this.email.value,
+      login: this.email.value,
       senha: this.senha.value
     }
 
