@@ -13,26 +13,6 @@ export class Service extends SimpleService {
         super(http);
     }
 
-    // teste (): Observable<any> {
-    //     return this.get(`/teste`);
-    // }
-
-    // categories(): Observable<any> {
-
-    //     let categories: Category[] = [
-    //         { id: 1, descricao: 'Geral' },
-    //         { id: 2, descricao: 'Esportes' },
-    //         { id: 3, descricao: 'Empregos' }
-    //     ]
-
-    //     let result: Result<Category[]> = {
-    //         result: categories
-    //     }
-
-    //     return of(result);
-    //     //return this.get(`/category`);
-    // }
-
     login(data: Login): Observable<any> {
         return this.post(data, `login`);
     }

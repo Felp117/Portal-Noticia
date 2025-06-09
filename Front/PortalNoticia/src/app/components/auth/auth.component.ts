@@ -6,8 +6,8 @@ import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { Service } from '../service/login.service';
-import { Login } from '../models/login.models';
+import { Service } from '../../service/login.service';
+import { Login } from '../../models/login.models';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router'
@@ -47,9 +47,10 @@ export class AuthComponent {
 
     this.service.login(data).subscribe({
       next: (r) => {
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home'], { queryParams: { logged: true } })
       },
       error: (r) => {
+        console.log(this.email, this.senha)
         alert('Email ou senha invalido')
       }
     })
