@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "/login")
     public ResponseEntity<Void> login(@RequestBody LoginDTO loginDTO) {
         service.login(loginDTO);
         return ResponseEntity.ok().build();

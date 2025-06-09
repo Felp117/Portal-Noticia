@@ -6,6 +6,7 @@ import br.com.portalNoticia.entity.Pessoa;
 import br.com.portalNoticia.entity.Usuario;
 import br.com.portalNoticia.repository.UsuarioRepository;
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class UsuarioService {
 
+    @Autowired
     private UsuarioRepository repository;
 
     public List<Usuario> findAll(){
