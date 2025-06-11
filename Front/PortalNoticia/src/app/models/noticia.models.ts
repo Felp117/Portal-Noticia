@@ -1,6 +1,6 @@
-export interface noticia {
+export interface Noticia {
     titulo: string,
-    detalhes: string,
+    descricao: string,
     dataPub: Date,
     categoria: string
 }

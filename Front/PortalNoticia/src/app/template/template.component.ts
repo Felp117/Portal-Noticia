@@ -24,7 +24,9 @@ export class TemplateComponent implements OnInit{
 
   ngOnInit(): void {
       this.router.queryParams.subscribe((t) => {
-        this.logged = Boolean(JSON.parse(t['logged'])) 
+        if(t['logged']) {
+          this.logged = Boolean(JSON.parse(t['logged']))
+        }
       });
   }
 
