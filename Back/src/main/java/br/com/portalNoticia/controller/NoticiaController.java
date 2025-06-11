@@ -1,4 +1,4 @@
-package br.com.portalNoticia.Controller;
+package br.com.portalNoticia.controller;
 
 import br.com.portalNoticia.dto.NoticiaDto;
 import br.com.portalNoticia.entity.Noticia;
@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/noticia")
+@CrossOrigin(origins = "http://localhost:4200")
 public class NoticiaController {
 
     private final NoticiaService service;
@@ -51,6 +52,7 @@ public class NoticiaController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "/noticia")
     public ResponseEntity<NoticiaDto> insert(@RequestBody NoticiaDto dto) {
         Noticia noticia = service.fromDto(dto);
         noticia = service.insert(noticia);

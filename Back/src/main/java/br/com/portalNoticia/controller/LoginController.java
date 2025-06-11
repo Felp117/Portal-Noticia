@@ -1,7 +1,6 @@
-package br.com.portalNoticia.Controller;
+package br.com.portalNoticia.controller;
 
 import br.com.portalNoticia.dto.LoginDTO;
-import br.com.portalNoticia.dto.UsuarioDto;
 import br.com.portalNoticia.services.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;

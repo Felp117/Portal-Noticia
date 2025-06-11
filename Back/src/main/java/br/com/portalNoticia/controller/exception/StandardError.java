@@ -1,4 +1,4 @@
-package br.com.portalNoticia.Controller.exception;
+package br.com.portalNoticia.controller.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

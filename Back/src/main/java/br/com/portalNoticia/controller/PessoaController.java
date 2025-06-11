@@ -1,16 +1,12 @@
-package br.com.portalNoticia.Controller;
+package br.com.portalNoticia.controller;
 
-import br.com.portalNoticia.Controller.util.Url;
 import br.com.portalNoticia.dto.PessoaDto;
-import br.com.portalNoticia.entity.Pessoa;
 import br.com.portalNoticia.services.PessoaService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
