@@ -3,6 +3,7 @@ import { TemplateComponent } from './template/template.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { NoticiaComponent } from './components/news/noticia.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: AuthComponent
+    },
+    {
+        path: 'cadastro',
+        component: RegisterComponent
     },
 
 ];

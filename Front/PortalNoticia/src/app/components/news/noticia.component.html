@@ -1,36 +1,45 @@
 <mat-card class="noticia-content">
     <mat-card-content>
-        <mat-card-title class="form-noticia">Crie sua noticia</mat-card-title>
+        <mat-card-title class="form-noticia">Crie sua notícia</mat-card-title>
     </mat-card-content>
-    <div class="example-container">
+
+    <div class="noticia-container">
         <form [formGroup]="form">
             <mat-form-field appearance="outline">
-                <mat-label>Titulo da noticia</mat-label>
-                <input matInput>
+                <mat-label>Título da notícia</mat-label>
+                <textarea matInput cdkTextareaAutosize></textarea>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
-                <mat-label>descricao</mat-label>
-                <input matInput>
+                <mat-label>Descrição</mat-label>
+                <textarea matInput cdkTextareaAutosize></textarea>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Data publicação</mat-label>
-                <input matInput>
-                <mat-error *ngIf="form.invalid && form.hasError('data_pub')">Data invalida</mat-error>
+                <input matInput type="date">
+                <mat-error *ngIf="form.invalid && form.hasError('data_pub')">
+                    Data inválida
+                </mat-error>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Categoria</mat-label>
-                <select formControlName="categoria">
+                <select matNativeControl formControlName="categoria">
                     <option value="" [ngValue]="null">Selecione a categoria</option>
-                    <option *ngFor="let categoria of categorias;" [ngValue]="categoria.id">{{categoria.nome}}
+                    <option *ngFor="let categoria of categorias;" [ngValue]="categoria.id">
+                        {{ categoria.nome }}
                     </option>
                 </select>
             </mat-form-field>
         </form>
     </div>
+
     <div>
         <div>
-            <a mat-button class="cadastro-content" (click)="cadastrar()">Cadastrar noticia</a>
+            <a mat-button class="cadastro-content" (click)="cadastrar()">Cadastrar notícia</a>
         </div>
     </div>
 </mat-card>
+
 <router-outlet></router-outlet>

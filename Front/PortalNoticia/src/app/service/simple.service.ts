@@ -74,7 +74,8 @@ export class SimpleService {
     }
 
     post(data: any, url: string) {
-        return this.http.post(`${this.baseUrl}${url}`, data, this.options).pipe(
+        const cleanedUrl = `${this.baseUrl}${url}`.replace(/([^:]\/)\/+/g, '$1');
+        return this.http.post(cleanedUrl, data, this.options).pipe(
             map(this.extractData),
             catchError(this.handleError)
         );

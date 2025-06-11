@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,12 +9,11 @@ import { Categoria } from '../../models/categoria';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Service } from '../../service/login.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-noticia',
   providers: [Service],
-  imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule, HttpClientModule],
+  imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule],
   templateUrl: './noticia.component.html',
   styleUrl: './noticia.component.scss'
 })
@@ -25,7 +24,9 @@ export class NoticiaComponent {
   categorias: Categoria[] = [
     {id: 1, nome: 'Esporte'},
     {id: 2, nome: 'Politica'},
-    {id: 3, nome: 'tafunfando'}
+    {id: 3, nome: 'Entretenimento'},
+    {id: 4, nome: 'Empregos'},
+    {id: 5, nome: 'região'}
   ]
 
   constructor(

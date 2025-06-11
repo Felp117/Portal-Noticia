@@ -9,26 +9,24 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-template',
-  imports: [MatToolbarModule, MatTabsModule, MatButtonModule, 
+  imports: [MatToolbarModule, MatTabsModule, MatButtonModule,
     MatDividerModule, MatIconModule, RouterOutlet, RouterLink, CommonModule],
   templateUrl: './template.component.html',
   styleUrl: './template.component.scss'
 })
-export class TemplateComponent implements OnInit{
+export class TemplateComponent implements OnInit {
 
-    logged: boolean = false;
+  logged: boolean = false;
 
-    constructor (private router: ActivatedRoute){
+  constructor(private router: ActivatedRoute) {
 
-    }
-
-  ngOnInit(): void {
-      this.router.queryParams.subscribe((t) => {
-        if(t['logged']) {
-          this.logged = Boolean(JSON.parse(t['logged']))
-        }
-      });
   }
 
-
+  ngOnInit(): void {
+    this.router.queryParams.subscribe((t) => {
+      if (t['logged']) {
+        this.logged = Boolean(JSON.parse(t['logged']))
+      }
+    });
+  }
 }

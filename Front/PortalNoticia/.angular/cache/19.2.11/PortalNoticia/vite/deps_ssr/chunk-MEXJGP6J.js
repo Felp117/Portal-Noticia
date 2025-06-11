@@ -6,13 +6,13 @@ import {
   inject,
   setClassMetadata,
   ɵɵdefineInjectable
-} from "./chunk-OMNUS6WF.js";
-import {
-  require_operators
-} from "./chunk-XCIYP5SE.js";
+} from "./chunk-SY4CU36N.js";
 import {
   require_cjs
 } from "./chunk-ZUJ64LXG.js";
+import {
+  require_operators
+} from "./chunk-XCIYP5SE.js";
 import {
   __toESM
 } from "./chunk-YHCV7DAQ.js";
@@ -135,4 +135,4 @@ var SharedResizeObserver = class _SharedResizeObserver {
 export {
   SharedResizeObserver
 };
-//# sourceMappingURL=chunk-XAZLARMN.js.map
+//# sourceMappingURL=chunk-MEXJGP6J.js.map

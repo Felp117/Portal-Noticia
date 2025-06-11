@@ -22,6 +22,7 @@
       <section>
         <div>
           <a mat-button class="login-content" routerLink="/login" *ngIf="!logged">Login<mat-icon>lock_person</mat-icon></a>
+          <a mat-button class="login-content" routerLink="/cadastro" *ngIf="!logged">Cadastrar<mat-icon>person</mat-icon></a>
           <span><mat-icon class="login-content" *ngIf="logged">person</mat-icon></span>
           <a mat-button class="login-content" routerLink="/noticia" *ngIf="logged">Criar Noticia<mat-icon>newspaper</mat-icon></a>
         </div>

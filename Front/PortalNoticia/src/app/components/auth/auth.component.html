@@ -5,8 +5,8 @@
         <div class="example-container">
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput placeholder="Digite seu email" [formControl]="email" required>
-                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                <input matInput placeholder="Digite seu email" [formControl]="login" required>
+                <mat-error *ngIf="login.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
             <div class="space"></div>
             <mat-form-field appearance="outline">
@@ -17,7 +17,7 @@
 
         </div>
         <div>
-            <a mat-button class="acessar-content" (click)="login()">Acessar</a>
+            <a mat-button class="acessar-content" (click)="acess()">Acessar</a>
         </div>
         <div><a href="#" class="senha-content">Esqueceu a senha?</a></div>
     </mat-card-content>

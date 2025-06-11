@@ -9,20 +9,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { Service } from '../../service/login.service';
 import { Login } from '../../models/login.models';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   providers: [Service],
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, NgIf, HttpClientModule, RouterModule],
+  imports: [MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, NgIf, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 
 })
 export class AuthComponent {
-  email = new FormControl(null, [Validators.required, Validators.email]);
+  login = new FormControl(null, [Validators.required, Validators.email]);
   senha = new FormControl(null, [Validators.required]);
   hide = true;
 
@@ -33,15 +32,15 @@ export class AuthComponent {
   }
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'Digite seu Email' :
-      this.email.hasError('email') ? 'Email invalido' :
+    return this.login.hasError('required') ? 'Digite seu Email' :
+      this.login.hasError('login') ? 'login invalido' :
         '';
   }
 
-  login() {
+  acess() {
 
     let data: Login = {
-      login: this.email.value,
+      login: this.login.value,
       senha: this.senha.value
     }
 
@@ -50,7 +49,6 @@ export class AuthComponent {
         this.router.navigate(['/home'], { queryParams: { logged: true } })
       },
       error: (r) => {
-        console.log(this.email, this.senha)
         alert('Email ou senha invalido')
       }
     })
