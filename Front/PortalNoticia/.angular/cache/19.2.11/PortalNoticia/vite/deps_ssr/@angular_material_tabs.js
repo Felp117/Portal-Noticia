@@ -6,7 +6,7 @@ import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   _StructuralStylesLoader
-} from "./chunk-ELOTSZJ2.js";
+} from "./chunk-QLV4Y4XM.js";
 import {
   RtlScrollAxisType,
   getRtlScrollAxisType,
@@ -23,11 +23,7 @@ import {
   SPACE,
   _IdGenerator,
   hasModifierKey
-} from "./chunk-D54A4FYE.js";
-import {
-  BidiModule,
-  Directionality
-} from "./chunk-FCHGPEZI.js";
+} from "./chunk-VOBI2VWJ.js";
 import {
   Platform,
   _CdkPrivateStyleLoader,
@@ -35,6 +31,10 @@ import {
   coerceElement,
   coerceNumberProperty
 } from "./chunk-JXODGMF2.js";
+import {
+  BidiModule,
+  Directionality
+} from "./chunk-FCHGPEZI.js";
 import "./chunk-3MNEXQ3R.js";
 import {
   DOCUMENT

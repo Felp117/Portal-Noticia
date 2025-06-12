@@ -2,7 +2,7 @@ import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   _StructuralStylesLoader
-} from "./chunk-HCTZ4AAN.js";
+} from "./chunk-Q3R77ZKN.js";
 import {
   SharedResizeObserver
 } from "./chunk-VKRKKKML.js";
@@ -22,7 +22,7 @@ import {
   SPACE,
   _IdGenerator,
   hasModifierKey
-} from "./chunk-W6DXETIB.js";
+} from "./chunk-QAVBH4RT.js";
 import {
   BidiModule,
   Directionality
