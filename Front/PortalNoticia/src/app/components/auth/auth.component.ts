@@ -10,6 +10,7 @@ import { Service } from '../../service/login.service';
 import { Login } from '../../models/login.models';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +28,8 @@ export class AuthComponent {
 
   constructor(
     private service: Service,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -46,11 +48,10 @@ export class AuthComponent {
 
     this.service.login(data).subscribe({
       next: (r) => {
-        this.router.navigate(['/home'], { queryParams: { logged: true } })
+        this.toastr.success("Login feito com sucesso!")
+        this.router.navigate(['/home'])
       },
-      error: (r) => {
-        alert('Email ou senha invalido')
-      }
+      error: (r) => this.toastr.success("Login ou email invalido!")
     })
   }
 }
