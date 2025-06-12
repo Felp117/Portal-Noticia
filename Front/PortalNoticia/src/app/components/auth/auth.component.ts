@@ -51,7 +51,7 @@ export class AuthComponent {
         this.toastr.success("Login feito com sucesso!")
         this.router.navigate(['/home'])
       },
-      error: (r) => this.toastr.success("Login ou email invalido!")
+      error: (r) => this.toastr.error("Login ou email invalido!")
     })
   }
 }
