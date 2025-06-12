@@ -1,6 +1,6 @@
-package br.com.portalNoticia.repository;
+package br.com.portal.noticia.repository;
 
-import br.com.portalNoticia.entity.Categoria;
+import br.com.portal.noticia.entity.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

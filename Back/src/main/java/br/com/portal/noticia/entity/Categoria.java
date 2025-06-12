@@ -1,4 +1,4 @@
-package br.com.portalNoticia.entity;
+package br.com.portal.noticia.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

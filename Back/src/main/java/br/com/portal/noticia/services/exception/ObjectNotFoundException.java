@@ -1,4 +1,4 @@
-package br.com.portalNoticia.services.exception;
+package br.com.portal.noticia.services.exception;
 
 import java.io.Serial;
 import java.io.Serializable;

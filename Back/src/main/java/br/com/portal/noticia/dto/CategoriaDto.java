@@ -1,6 +1,6 @@
-package br.com.portalNoticia.dto;
+package br.com.portal.noticia.dto;
 
-import br.com.portalNoticia.entity.Categoria;
+import br.com.portal.noticia.entity.Categoria;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

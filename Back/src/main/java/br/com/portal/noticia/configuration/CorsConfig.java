@@ -1,4 +1,4 @@
-package br.com.portalNoticia.configuration;
+package br.com.portal.noticia.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

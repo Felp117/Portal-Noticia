@@ -1,9 +1,7 @@
-package br.com.portalNoticia.services;
+package br.com.portal.noticia.services;
 
-import br.com.portalNoticia.dto.CategoriaDto;
-import br.com.portalNoticia.entity.Categoria;
-import br.com.portalNoticia.repository.CategoriaRepository;
-import org.apache.coyote.BadRequestException;
+import br.com.portal.noticia.entity.Categoria;
+import br.com.portal.noticia.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

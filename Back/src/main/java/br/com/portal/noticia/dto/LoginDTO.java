@@ -1,4 +1,4 @@
-package br.com.portalNoticia.dto;
+package br.com.portal.noticia.dto;
 
 import lombok.Data;
 

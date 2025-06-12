@@ -1,7 +1,6 @@
-package br.com.portalNoticia.dto;
+package br.com.portal.noticia.dto;
 
-import br.com.portalNoticia.entity.Pessoa;
-import jakarta.validation.constraints.NotNull;
+import br.com.portal.noticia.entity.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor

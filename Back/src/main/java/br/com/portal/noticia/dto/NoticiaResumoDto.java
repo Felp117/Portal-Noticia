@@ -1,6 +1,6 @@
-package br.com.portalNoticia.dto;
+package br.com.portal.noticia.dto;
 
-import br.com.portalNoticia.entity.Noticia;
+import br.com.portal.noticia.entity.Noticia;
 import lombok.Data;
 
 import java.io.Serial;

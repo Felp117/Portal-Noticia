@@ -1,6 +1,6 @@
-package br.com.portalNoticia.dto;
+package br.com.portal.noticia.dto;
 
-import br.com.portalNoticia.entity.Usuario;
+import br.com.portal.noticia.entity.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 

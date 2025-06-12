@@ -1,4 +1,4 @@
-package br.com.portalNoticia.controller.util;
+package br.com.portal.noticia.controller.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

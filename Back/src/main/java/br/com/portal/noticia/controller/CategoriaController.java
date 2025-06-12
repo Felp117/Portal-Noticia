@@ -1,8 +1,8 @@
-package br.com.portalNoticia.controller;
+package br.com.portal.noticia.controller;
 
-import br.com.portalNoticia.dto.CategoriaDto;
-import br.com.portalNoticia.entity.Categoria;
-import br.com.portalNoticia.services.CategoriaService;
+import br.com.portal.noticia.dto.CategoriaDto;
+import br.com.portal.noticia.entity.Categoria;
+import br.com.portal.noticia.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,8 @@
-package br.com.portalNoticia.entity;
+package br.com.portal.noticia.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
-package br.com.portalNoticia.entity;
+package br.com.portal.noticia.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data

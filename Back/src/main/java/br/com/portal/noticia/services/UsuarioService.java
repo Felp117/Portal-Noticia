@@ -1,18 +1,16 @@
-package br.com.portalNoticia.services;
+package br.com.portal.noticia.services;
 
-import br.com.portalNoticia.dto.LoginDTO;
-import br.com.portalNoticia.dto.UsuarioDto;
-import br.com.portalNoticia.entity.Pessoa;
-import br.com.portalNoticia.entity.Usuario;
-import br.com.portalNoticia.repository.PessoaRepository;
-import br.com.portalNoticia.repository.UsuarioRepository;
-import org.apache.coyote.BadRequestException;
+import br.com.portal.noticia.dto.LoginDTO;
+import br.com.portal.noticia.dto.UsuarioDto;
+import br.com.portal.noticia.entity.Pessoa;
+import br.com.portal.noticia.entity.Usuario;
+import br.com.portal.noticia.repository.PessoaRepository;
+import br.com.portal.noticia.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;

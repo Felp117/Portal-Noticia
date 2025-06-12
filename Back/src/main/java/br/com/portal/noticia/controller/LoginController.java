@@ -1,8 +1,8 @@
-package br.com.portalNoticia.controller;
+package br.com.portal.noticia.controller;
 
-import br.com.portalNoticia.dto.LoginDTO;
-import br.com.portalNoticia.dto.RecoveryJwtDTO;
-import br.com.portalNoticia.services.AuthService;
+import br.com.portal.noticia.dto.LoginDTO;
+import br.com.portal.noticia.dto.RecoveryJwtDTO;
+import br.com.portal.noticia.services.AuthService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

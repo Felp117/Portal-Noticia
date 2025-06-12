@@ -1,8 +1,8 @@
-package br.com.portalNoticia.controller;
+package br.com.portal.noticia.controller;
 
-import br.com.portalNoticia.dto.NoticiaDto;
-import br.com.portalNoticia.entity.Noticia;
-import br.com.portalNoticia.services.NoticiaService;
+import br.com.portal.noticia.dto.NoticiaDto;
+import br.com.portal.noticia.entity.Noticia;
+import br.com.portal.noticia.services.NoticiaService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

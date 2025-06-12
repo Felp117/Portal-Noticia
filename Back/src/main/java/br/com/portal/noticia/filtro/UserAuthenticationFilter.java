@@ -1,9 +1,9 @@
-package br.com.portalNoticia.filtro;
-import br.com.portalNoticia.configuration.SecurityConfig;
-import br.com.portalNoticia.dto.UserDetailsDTO;
-import br.com.portalNoticia.entity.Usuario;
-import br.com.portalNoticia.repository.UsuarioRepository;
-import br.com.portalNoticia.services.JwtTokenService;
+package br.com.portal.noticia.filtro;
+import br.com.portal.noticia.configuration.SecurityConfig;
+import br.com.portal.noticia.dto.UserDetailsDTO;
+import br.com.portal.noticia.entity.Usuario;
+import br.com.portal.noticia.repository.UsuarioRepository;
+import br.com.portal.noticia.services.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

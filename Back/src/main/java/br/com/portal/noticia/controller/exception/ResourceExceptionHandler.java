@@ -1,4 +1,4 @@
-package br.com.portalNoticia.controller.exception;
+package br.com.portal.noticia.controller.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.ObjectNotFoundException;

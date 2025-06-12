@@ -1,5 +1,5 @@
-package br.com.portalNoticia.services;
-import br.com.portalNoticia.dto.UserDetailsDTO;
+package br.com.portal.noticia.services;
+import br.com.portal.noticia.dto.UserDetailsDTO;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

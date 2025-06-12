@@ -1,10 +1,10 @@
-package br.com.portalNoticia.services;
+package br.com.portal.noticia.services;
 
-import br.com.portalNoticia.dto.NoticiaDto;
-import br.com.portalNoticia.entity.Autor;
-import br.com.portalNoticia.entity.Categoria;
-import br.com.portalNoticia.entity.Noticia;
-import br.com.portalNoticia.repository.NoticiaRepository;
+import br.com.portal.noticia.dto.NoticiaDto;
+import br.com.portal.noticia.entity.Autor;
+import br.com.portal.noticia.entity.Categoria;
+import br.com.portal.noticia.entity.Noticia;
+import br.com.portal.noticia.repository.NoticiaRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
