@@ -1,12 +1,14 @@
 package br.com.portal.noticia.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
 @Data
+@AllArgsConstructor
 public class Noticia {
 
     @Id
@@ -20,12 +22,4 @@ public class Noticia {
     @ManyToOne
     private Autor autor;
 
-    public Noticia(Integer id, String titulo, String conteudo, Timestamp dataPublicacao, Categoria categoria, Autor autor) {
-        this.id = id;
-        this.titulo = titulo;
-        this.conteudo = conteudo;
-        this.dataPublicacao = dataPublicacao;
-        this.categoria = categoria;
-        this.autor = autor;
-    }
 }

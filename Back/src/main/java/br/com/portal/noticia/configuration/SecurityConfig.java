@@ -24,6 +24,8 @@ public class SecurityConfig {
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/usuario/cadastrar",
             "/login",
+            "/categoria",
+            "/noticia"
     };
 
     // Endpoints que requerem autenticação para serem acessados

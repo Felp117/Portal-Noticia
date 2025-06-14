@@ -9,16 +9,12 @@ import java.util.List;
 @Entity
 @Data
 public class Autor {
-
-    private String nome;
-    private String email;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String biografia;
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "autorid")
+    @JoinColumn(name = "pessoaId")
     private Pessoa pessoa;
 
     @OneToMany(mappedBy = "autor")

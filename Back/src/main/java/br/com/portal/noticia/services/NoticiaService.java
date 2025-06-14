@@ -4,11 +4,14 @@ import br.com.portal.noticia.dto.NoticiaDto;
 import br.com.portal.noticia.entity.Autor;
 import br.com.portal.noticia.entity.Categoria;
 import br.com.portal.noticia.entity.Noticia;
+import br.com.portal.noticia.repository.AutorRepository;
+import br.com.portal.noticia.repository.CategoriaRepository;
 import br.com.portal.noticia.repository.NoticiaRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +19,16 @@ import java.util.Optional;
 public class NoticiaService {
 
     private final NoticiaRepository repository;
+    private final AutorRepository autorRepository;
+    private final CategoriaRepository categoriaRepository;
+
 
     @Autowired
-    public NoticiaService(NoticiaRepository repository) {
+    public NoticiaService(NoticiaRepository repository, AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
         this.repository = repository;
+        this.autorRepository = autorRepository;
+
+        this.categoriaRepository = categoriaRepository;
     }
 
     public List<Noticia> findAll() {
@@ -58,11 +67,11 @@ public class NoticiaService {
     }
 
     public Noticia fromDto(NoticiaDto dto) {
-        Categoria categoria = new Categoria();
-        categoria.setId(dto.getCategoriaId());
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrado"));
 
-        Autor autor = new Autor();
-        autor.setId(dto.getAutorId());
+        Autor autor = autorRepository.findById(dto.getAutorId())
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
         return new Noticia(
                 dto.getId(),
                 dto.getTitulo(),

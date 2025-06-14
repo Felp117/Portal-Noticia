@@ -10,7 +10,11 @@ import java.util.Optional;
 @Service
 public class CategoriaService {
 
-    private CategoriaRepository repository;
+    private final CategoriaRepository repository;
+
+    public CategoriaService(CategoriaRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Categoria> findAll() {
         return repository.findAll();

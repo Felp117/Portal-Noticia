@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Data
@@ -36,7 +36,7 @@ public class NoticiaDto implements Serializable {
         }
         if(noticia.getAutor() != null) {
             this.autorId = noticia.getAutor().getId();
-            this.autorNome = noticia.getAutor().getNome();
+            this.autorNome = noticia.getAutor().getPessoa().getNome();
         }
     }
 

@@ -1,6 +1,5 @@
 package br.com.portal.noticia.services;
 
-import br.com.portal.noticia.dto.AutorDto;
 import br.com.portal.noticia.entity.Autor;
 import br.com.portal.noticia.repository.AutorRepository;
 import org.apache.coyote.BadRequestException;
@@ -35,29 +34,7 @@ public class AutorService {
     }
 
     public void delete(Integer id) throws BadRequestException {
-        findById(id);
         repository.deleteById(id);
-    }
-
-    public void update(Autor obj) throws BadRequestException {
-        Autor autor = findById(obj.getId());
-        autorUpdate(autor,obj);
-        repository.save(autor);
-    }
-
-    private void autorUpdate(Autor atual, Autor novo) {
-        atual.setBiografia(novo.getBiografia());
-        atual.setNome(novo.getNome());
-        atual.setEmail(novo.getEmail());
-    }
-
-    public Autor fromDto(AutorDto autorDto) {
-        Autor autor = new Autor();
-        autor.setId(autorDto.getId());
-        autor.setNome(autorDto.getNome());
-        autor.setEmail(autorDto.getEmail());
-        autor.setBiografia(autorDto.getBiografia());
-        return autor;
     }
 
 }

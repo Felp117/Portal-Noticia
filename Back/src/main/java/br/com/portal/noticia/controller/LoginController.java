@@ -6,6 +6,7 @@ import br.com.portal.noticia.services.AuthService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class LoginController {
     private final AuthService service;
 
     @PostMapping
-    public ResponseEntity<Void> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<RecoveryJwtDTO> login(@RequestBody LoginDTO loginDTO) {
         RecoveryJwtDTO token = service.authenticateUser(loginDTO);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(token,HttpStatus.OK);
     }
 }

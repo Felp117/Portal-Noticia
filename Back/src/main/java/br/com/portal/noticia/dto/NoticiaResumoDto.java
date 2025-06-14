@@ -5,7 +5,8 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 @Data
 public class NoticiaResumoDto implements Serializable {

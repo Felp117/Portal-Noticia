@@ -40,8 +40,6 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                throw new RuntimeException("O token está ausente.");
             }
         }
         filterChain.doFilter(request, response);
@@ -57,8 +55,17 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     // Verifica se o endpoint requer autenticação antes de processar a requisição
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        return !Arrays.asList(SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
+        String uriOriginal = request.getRequestURI();
+
+        // Remove barra final se houver
+        String uriSemBarra = uriOriginal.endsWith("/") ?
+                uriOriginal.substring(0, uriOriginal.length() - 1) :
+                uriOriginal;
+
+        final String finalUri = uriSemBarra;
+
+        return Arrays.stream(SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED)
+                .noneMatch(publicEndpoint -> publicEndpoint.equalsIgnoreCase(finalUri));
     }
 }
 
